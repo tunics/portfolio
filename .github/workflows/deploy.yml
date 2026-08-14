@@ -58,7 +58,7 @@ jobs:
                   protocol: ftp
                   port: 21
                   local-dir: ./dist/
-                  server-dir: ./public_html/
+                  server-dir: ./
                   log-level: standard
 
             - name: Verify files on Hostinger
@@ -70,12 +70,12 @@ jobs:
                   remote_files="$(curl --silent --show-error --fail \
                     --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
                     --list-only \
-                    "ftp://${FTP_SERVER}:21/public_html/" | tr -d '\r')"
+                    "ftp://${FTP_SERVER}:21/" | tr -d '\r')"
 
-                  echo "Files found in public_html:"
+                  echo "Files found in the FTP account root:"
                   printf '%s\n' "$remote_files"
 
                   if ! grep -Eq '(^|/)index\.html$' <<< "$remote_files"; then
-                    echo "::error::Upload finished, but public_html/index.html was not found on the FTP server."
+                    echo "::error::Upload finished, but index.html was not found in the FTP account root."
                     exit 1
                   fi
