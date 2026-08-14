@@ -1,5 +1,6 @@
 ---
 import marker from '../assets/marker.svg?url';
+import { siteConfig } from '../config/site';
 import SocialLinks from './SocialLinks.astro';
 
 const homeUrl = import.meta.env.BASE_URL;
@@ -9,7 +10,7 @@ const homeUrl = import.meta.env.BASE_URL;
     <h1>Antonio <br />Cruvinel <br />Caixeta</h1>
 
     <div class="subtitle">
-        Designer gráfico e web, especializado em UX e UI
+        {siteConfig.jobTitle}
         <img alt="" aria-hidden="true" class="marker" src={marker} />
     </div>
 

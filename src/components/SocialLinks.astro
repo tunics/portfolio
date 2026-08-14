@@ -1,10 +1,5 @@
 ---
-import whatsapp from '../assets/logos/whatsapp.svg?url';
-import linkedin from '../assets/logos/linkedin.svg?url';
-import behance from '../assets/logos/behance.svg?url';
-import github from '../assets/logos/github.svg?url';
-import instagram from '../assets/logos/instagram.svg?url';
-import fiveHundredPx from '../assets/logos/500px.svg?url';
+import { socialLinks } from '../config/social-links';
 
 interface Props {
     variant?: 'default' | 'menu';
@@ -12,32 +7,18 @@ interface Props {
 
 const { variant = 'default' } = Astro.props;
 
-const socialLinks = [
-    { href: 'https://wa.me/5561982282199', label: 'WhatsApp', icon: whatsapp },
-    {
-        href: 'https://www.linkedin.com/in/antonio-caixeta',
-        label: 'LinkedIn',
-        icon: linkedin,
-    },
-    { href: 'https://behance.net/tunics', label: 'Behance', icon: behance },
-    { href: 'https://github.com/tunics', label: 'GitHub', icon: github },
-    {
-        href: 'https://www.instagram.com/tunics/',
-        label: 'Instagram',
-        icon: instagram,
-    },
-    { href: 'https://500px.com/tunics', label: '500px', icon: fiveHundredPx },
-];
 ---
 
 <div class:list={['social-links', `social-links--${variant}`]}>
     {variant === 'menu' && <hr />}
     {
-        socialLinks.map(({ href, label, icon }) => (
+        socialLinks.map(({ href, label, icon, officialProfile }) => (
             <a
                 href={href}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={officialProfile
+                    ? 'me noopener noreferrer'
+                    : 'noopener noreferrer'}
                 aria-label={label}
             >
                 <img src={icon} alt="" />

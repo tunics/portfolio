@@ -16,7 +16,6 @@ images:
 tags:
   - "design system"
   - "UI"
-  - "UX"
   - "Figma"
 order: 3
 published: true

@@ -1,5 +1,9 @@
 ---
 import '../styles/global.css';
+import socialImage from '../assets/img-compartilhamento.png';
+import profileImage from '../assets/img-antonio-perfil.png';
+import { officialProfileUrls } from '../config/social-links';
+import { siteConfig } from '../config/site';
 
 interface Props {
     title?: string;
@@ -7,20 +11,93 @@ interface Props {
 }
 
 const {
-    title = 'Antonio Cruvinel Caixeta',
-    description =
-        'Portfólio de Antonio Cruvinel Caixeta, designer gráfico e web especializado em UX e UI.',
+    title = siteConfig.title,
+    description = siteConfig.description,
 } = Astro.props;
+
+const canonicalUrl = Astro.site
+    ? new URL(Astro.url.pathname, Astro.site)
+    : Astro.url;
+const socialImageUrl = new URL(
+    socialImage.src,
+    Astro.site ?? Astro.url.origin,
+);
+const profileImageUrl = new URL(
+    profileImage.src,
+    Astro.site ?? Astro.url.origin,
+);
+const homeUrl = new URL('/', Astro.site ?? Astro.url.origin);
+const personId = new URL('/#person', homeUrl);
+const websiteId = new URL('/#website', homeUrl);
+const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+        {
+            '@type': 'WebSite',
+            '@id': websiteId.href,
+            url: homeUrl.href,
+            name: siteConfig.name,
+            inLanguage: siteConfig.language,
+            creator: { '@id': personId.href },
+        },
+        {
+            '@type': 'Person',
+            '@id': personId.href,
+            name: siteConfig.name,
+            url: homeUrl.href,
+            image: profileImageUrl.href,
+            jobTitle: siteConfig.jobTitle,
+            address: {
+                '@type': 'PostalAddress',
+                addressLocality: siteConfig.location.city,
+                addressRegion: siteConfig.location.region,
+                addressCountry: siteConfig.location.country,
+            },
+            knowsAbout: siteConfig.services,
+            sameAs: officialProfileUrls,
+        },
+    ],
+};
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang={siteConfig.language}>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content={description} />
         <meta name="theme-color" content="#fdfdfd" />
         <meta name="generator" content={Astro.generator} />
+
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+        <link rel="canonical" href={canonicalUrl} />
+        <link rel="sitemap" href="/sitemap.xml" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={siteConfig.name} />
+        <meta property="og:locale" content={siteConfig.locale} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={socialImageUrl} />
+        <meta property="og:image:secure_url" content={socialImageUrl} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content={String(socialImage.width)} />
+        <meta property="og:image:height" content={String(socialImage.height)} />
+        <meta property="og:image:alt" content={siteConfig.socialImageAlt} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={socialImageUrl} />
+        <meta name="twitter:image:alt" content={siteConfig.socialImageAlt} />
+
+        <script
+            type="application/ld+json"
+            is:inline
+            set:html={JSON.stringify(structuredData)}
+        />
+
         <title>{title}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
