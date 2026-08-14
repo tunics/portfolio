@@ -41,8 +41,8 @@ const skillGroups = [
             <Image
                 src={profileImage}
                 alt="Foto de perfil de Antonio Cruvinel Caixeta"
-                widths={[128, 256]}
-                sizes="128px"
+                widths={[192, 384, 576]}
+                sizes="192px"
             />
         </div>
 
@@ -89,15 +89,16 @@ const skillGroups = [
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 1.5rem;
+        gap: 0 1.5rem;
     }
 
     .profile-image {
-        width: 8rem;
-        height: 8rem;
-        border-radius: 50%;
+        width: 12rem;
+        height: 12rem;
         overflow: hidden;
         flex: 0 0 auto;
+        position: relative;
+        top: -2.5rem;
     }
 
     .profile-image :global(img) {
@@ -151,6 +152,7 @@ const skillGroups = [
     @media (min-width: 900px) {
         .profile {
             flex-direction: row;
+            align-items: start;
         }
 
         .profile p {

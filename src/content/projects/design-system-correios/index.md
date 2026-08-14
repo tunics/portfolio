@@ -1,7 +1,7 @@
 ---
 title: "Design System Correios"
 slug: "design-system-correios"
-summary: "Padronização dos aplicativos e sistemas dos Correios."
+summary: "Design system para padronização visual das interfaces de aplicativos e sistemas dos Correios."
 cover: "./design-system-correios-1.png"
 coverAlt: "Telas de aplicativos do Design System dos Correios"
 images:
@@ -21,4 +21,4 @@ order: 3
 published: true
 ---
 
-Projeto de padronização visual e de experiência para os aplicativos e sistemas dos Correios.
+O projeto reúne padrões de tipografia, cores, componentes e iconografia, incluindo versões para os modos claro e escuro. Desenvolvido no Figma para tornar as interfaces mais consistentes e facilitar a evolução dos produtos digitais.

@@ -1,7 +1,7 @@
 ---
 title: "Blog Pessoal"
 slug: "blog-pessoal"
-summary: "Projeto desenvolvido para o Nanodegree de Front-End Web Developer da Udacity."
+summary: "Blog pessoal responsivo desenvolvido em HTML e CSS durante o Nanodegree Front-End Web Developer da Udacity."
 cover: "./personal-blog-1.png"
 coverAlt: "Páginas do blog pessoal apresentadas em um monitor"
 images:
@@ -25,4 +25,4 @@ order: 1
 published: true
 ---
 
-O projeto foi desenvolvido em HTML e CSS e está disponível para consulta e uso por meio do meu perfil no GitHub.
+O projeto explora estrutura semântica, organização visual e layouts adaptados para diferentes tamanhos de tela. O código e a demonstração estão disponíveis no GitHub.

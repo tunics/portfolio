@@ -21,8 +21,8 @@ const { Content } = await render(project);
                     src={image.src}
                     alt={image.alt}
                     class="project-image"
-                    widths={[640, 960, 1280, 1600]}
-                    sizes="(min-width: 768px) 65vw, 100vw"
+                    widths={[360, 480, 640, 960, 1280, 1600]}
+                    sizes="(min-width: 1448px) 910px, (min-width: 768px) calc(65vw - 2rem), calc(100vw - 3rem)"
                 />
             ))
         }

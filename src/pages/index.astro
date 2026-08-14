@@ -17,8 +17,17 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
 
         <main>
             <section id="portfolio" class="portfolio">
-                <h2>Portfólio</h2>
-                {projects.map((project) => <ProjectCard project={project} />)}
+                <div class="portfolio-titulo">
+                    <h2>Portfólio</h2>
+                </div>
+                {
+                    projects.map((project, index) => (
+                        <ProjectCard
+                            project={project}
+                            priority={index === 0}
+                        />
+                    ))
+                }
             </section>
 
             <hr />
@@ -39,8 +48,13 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
         gap: 1.5rem;
     }
 
-    .portfolio h2 {
+    .portfolio-titulo {
         grid-column: 1 / -1;
+    }
+
+    .portfolio-titulo p {
+        max-width: 65ch;
+        font-size: 1.125rem;
     }
 
 </style>

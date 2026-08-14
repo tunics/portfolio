@@ -1,7 +1,7 @@
 ---
 title: "Landing Page"
 slug: "landing-page"
-summary: "Projeto desenvolvido para o Nanodegree de Front-End Web Developer da Udacity."
+summary: "Landing page responsiva desenvolvida em HTML, CSS e JavaScript, com navegação dinâmica entre seções."
 cover: "./landing-page-1.png"
 coverAlt: "Landing page apresentada em um monitor e em um celular"
 images:
@@ -26,4 +26,4 @@ order: 2
 published: true
 ---
 
-Uma landing page com múltiplas seções e um menu dinâmico. Desenvolvido em HTML, CSS e JavaScript, o projeto está disponível por meio do meu perfil no GitHub.
+Criado durante o Nanodegree Front-End Web Developer da Udacity, o projeto trabalha organização de conteúdo, responsividade e interações com JavaScript. O código e a demonstração estão disponíveis no GitHub.

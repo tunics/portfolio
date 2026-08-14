@@ -19,6 +19,23 @@ página inicial.
 | `npm run build` | Valida e gera o site estático em `dist/` |
 | `npm run preview` | Serve localmente o build de produção |
 
+## Google Analytics
+
+Copie `.env.example` para `.env` e substitua o valor de
+`PUBLIC_GA_MEASUREMENT_ID` pelo ID do fluxo web do GA4. A tag é incluída
+somente nos builds de produção.
+
+## Deploy na Hostinger
+
+O workflow `.github/workflows/deploy.yml` valida, compila e envia o conteúdo
+de `dist/` a cada push na branch `main`. Configure no repositório do GitHub:
+
+- Variable: `PUBLIC_GA_MEASUREMENT_ID`
+- Secrets: `FTP_SERVER`, `FTP_USERNAME` e `FTP_PASSWORD`
+
+Use de preferência uma conta FTP da Hostinger limitada ao diretório
+`public_html`, pois o workflow publica na raiz dessa conta.
+
 ## Estrutura
 
 ```text

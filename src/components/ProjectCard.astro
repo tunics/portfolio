@@ -4,9 +4,10 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
     project: CollectionEntry<'projects'>;
+    priority?: boolean;
 }
 
-const { project } = Astro.props;
+const { project, priority = false } = Astro.props;
 const { slug, title, summary, cover, coverAlt } = project.data;
 const dialogId = `project-dialog-${slug}`;
 ---
@@ -22,8 +23,9 @@ const dialogId = `project-dialog-${slug}`;
         src={cover}
         alt={coverAlt}
         class="cover"
-        widths={[480, 720, 960]}
-        sizes="(min-width: 1200px) 33vw, (min-width: 900px) 50vw, 100vw"
+        widths={[360, 480, 720, 960, 1440]}
+        sizes="(min-width: 1850px) 20vw, (min-width: 1464px) 25vw, (min-width: 1070px) 35vw, (min-width: 768px) 60vw, calc(100vw - 3rem)"
+        priority={priority}
     />
 
     <div class="summary">

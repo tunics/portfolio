@@ -4,6 +4,7 @@ import socialImage from '../assets/img-compartilhamento.png';
 import profileImage from '../assets/img-antonio-perfil.png';
 import { officialProfileUrls } from '../config/social-links';
 import { siteConfig } from '../config/site';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 
 interface Props {
     title?: string;
@@ -68,6 +69,8 @@ const structuredData = {
         <meta name="description" content={description} />
         <meta name="theme-color" content="#fdfdfd" />
         <meta name="generator" content={Astro.generator} />
+
+        <GoogleAnalytics />
 
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
         <link rel="canonical" href={canonicalUrl} />

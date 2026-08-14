@@ -1,6 +1,9 @@
 node_modules/
 dist/
 .astro/
+.env
+.env.*
+!.env.example
 .edge-preview-profile/
 *.log
 .DS_Store
