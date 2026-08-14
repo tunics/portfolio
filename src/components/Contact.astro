@@ -2,25 +2,25 @@
 import SocialLinks from './SocialLinks.astro';
 ---
 
-<section id="contact">
+<section id="contact" class="contact">
     <h2>Entre em contato</h2>
 
-    <div class="links-container">
-        <p class="contato">
+    <div class="contact-links">
+        <p class="contact-item">
             <span class="material-symbols-outlined" aria-hidden="true">
                 distance
             </span>
             Goiânia, Goiás — Brasil
         </p>
 
-        <a href="tel:+5561982282199" class="contato">
+        <a href="tel:+5561982282199" class="contact-item">
             <span class="material-symbols-outlined" aria-hidden="true">
                 phone
             </span>
             +55 (61) 98228-2199
         </a>
 
-        <a href="mailto:contato@antoniocruvinel.com.br" class="contato">
+        <a href="mailto:contato@antoniocruvinel.com.br" class="contact-item">
             <span class="material-symbols-outlined" aria-hidden="true">
                 email
             </span>
@@ -30,3 +30,36 @@ import SocialLinks from './SocialLinks.astro';
         <SocialLinks />
     </div>
 </section>
+
+<style>
+    .contact {
+        scroll-margin-top: 4.5rem;
+    }
+
+    .contact-links {
+        width: 100%;
+        margin-top: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .contact-item {
+        margin: 0;
+        padding: 0.25rem;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        text-decoration: none;
+    }
+
+    a.contact-item:hover,
+    a.contact-item:focus-visible {
+        background-color: var(--color-surface);
+    }
+
+    a.contact-item:focus-visible {
+        outline: 1px solid var(--color-text);
+    }
+</style>

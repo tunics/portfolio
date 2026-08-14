@@ -33,11 +33,11 @@ const skillGroups = [
 ];
 ---
 
-<section id="about">
+<section id="about" class="about">
     <h2>Sobre</h2>
 
-    <div class="profile-container">
-        <div class="img-profile">
+    <div class="profile">
+        <div class="profile-image">
             <Image
                 src={profileImage}
                 alt="Foto de perfil de Antonio Cruvinel Caixeta"
@@ -46,7 +46,7 @@ const skillGroups = [
             />
         </div>
 
-        <p class="txt-profile">
+        <p>
             Olá! Meu nome é Antonio Cruvinel Caixeta e sou designer gráfico e
             web formado pela UFG (Universidade Federal de Goiás). Buscando
             sempre me aperfeiçoar, estou me especializando em UI e UX e também
@@ -58,14 +58,113 @@ const skillGroups = [
         </p>
     </div>
 
-    <h3>Habilidades</h3>
+    <h3 class="skills-heading">Habilidades</h3>
 
-    {
-        skillGroups.map(({ title, skills }) => (
-            <div class="skills">
-                <h3>{title}</h3>
-                {skills.map((skill) => <span class="chips">{skill}</span>)}
-            </div>
-        ))
-    }
+    <div class="skill-groups">
+        {
+            skillGroups.map(({ title, skills }) => (
+                <div class="skill-group">
+                    <h3>{title}</h3>
+                    {skills.map((skill) => <span>{skill}</span>)}
+                </div>
+            ))
+        }
+    </div>
 </section>
+
+<style>
+    .about {
+        scroll-margin-top: 4.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .profile {
+        width: 100%;
+        padding: 2rem;
+        background-color: var(--color-surface);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .profile-image {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 50%;
+        overflow: hidden;
+        flex: 0 0 auto;
+    }
+
+    .profile-image :global(img) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profile p {
+        font-size: 1.25rem;
+        max-width: 70ch;
+        text-align: center;
+    }
+
+    .skills-heading {
+        width: 100%;
+        font-weight: 700;
+    }
+
+    .skill-groups {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        align-items: start;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .skill-group {
+        flex: 0 1 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .skill-group h3 {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .skill-group span {
+        padding: 0.5rem;
+        background-color: var(--color-surface);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    @media (min-width: 900px) {
+        .profile {
+            flex-direction: row;
+        }
+
+        .profile p {
+            text-align: left;
+        }
+
+        .skill-group {
+            flex-basis: calc(50% - 0.75rem);
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .skill-group {
+            flex-basis: calc(100% / 3 - 1rem);
+        }
+    }
+</style>

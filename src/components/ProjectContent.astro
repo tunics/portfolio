@@ -1,43 +1,26 @@
 ---
 import { Image } from 'astro:assets';
 import { render, type CollectionEntry } from 'astro:content';
-import { resolveProjectVideo } from '../utils/project-media';
 
 interface Props {
     project: CollectionEntry<'projects'>;
-    modal?: boolean;
+    headingId?: string;
+    elevated?: boolean;
 }
 
-const { project, modal = false } = Astro.props;
-const { slug, title, summary, images, videos, links, tags } = project.data;
+const { project, headingId, elevated = false } = Astro.props;
+const { title, summary, images, links, tags } = project.data;
 const { Content } = await render(project);
 ---
 
-<div class="project-modal-container">
-    <div class="project-media-container">
-        {
-            videos.map((video) => (
-                <video
-                    class="project-video"
-                    controls
-                    loop
-                    preload="metadata"
-                    aria-label={video.title ?? `Vídeo do projeto ${title}`}
-                >
-                    <source
-                        src={resolveProjectVideo(project.filePath, video.src)}
-                        type={video.type}
-                    />
-                </video>
-            ))
-        }
-
+<div class:list={['project-layout', { 'project-layout--elevated': elevated }]}>
+    <div class="project-gallery">
         {
             images.map((image) => (
                 <Image
                     src={image.src}
                     alt={image.alt}
-                    class="project-img"
+                    class="project-image"
                     widths={[640, 960, 1280, 1600]}
                     sizes="(min-width: 768px) 65vw, 100vw"
                 />
@@ -45,27 +28,10 @@ const { Content } = await render(project);
         }
     </div>
 
-    <div class="project-info">
-        <h2
-            id={modal ? `project-title-${slug}` : undefined}
-            class="project-name"
-        >
-            {title}
-        </h2>
-        {
-            modal && (
-                <button
-                    class="btn-close-modal"
-                    type="button"
-                    data-project-close
-                    aria-label={`Fechar projeto ${title}`}
-                >
-                    <span class="material-symbols-outlined" aria-hidden="true">
-                        close
-                    </span>
-                </button>
-            )
-        }
+    <section class="project-details">
+        <h2 id={headingId}>{title}</h2>
+        <slot name="actions" />
+
         <p class="project-summary">{summary}</p>
         <div class="project-description"><Content /></div>
 
@@ -76,7 +42,6 @@ const { Content } = await render(project);
                         <li>
                             <a
                                 href={link.url}
-                                class="link"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -89,7 +54,108 @@ const { Content } = await render(project);
         }
 
         <div class="project-tags" aria-label="Tecnologias e categorias">
-            {tags.map((tag) => <span class="chips">{tag}</span>)}
+            {tags.map((tag) => <span>{tag}</span>)}
         </div>
-    </div>
+    </section>
 </div>
+
+<style>
+    .project-layout {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .project-layout--elevated {
+        background-color: rgb(255 255 255 / 45%);
+    }
+
+    .project-gallery {
+        width: 100%;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project-image {
+        width: 100%;
+    }
+
+    .project-details {
+        padding: 2rem;
+        position: relative;
+        order: -1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    .project-summary {
+        font-weight: 600;
+    }
+
+    :global(.project-description > :not(:last-child)) {
+        margin-bottom: 1rem;
+    }
+
+    .project-links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .project-links a {
+        display: inline-block;
+        padding: 0.25rem;
+        color: var(--color-text);
+        text-decoration: none;
+    }
+
+    .project-links a:hover,
+    .project-links a:focus-visible {
+        background-color: var(--color-surface);
+    }
+
+    .project-links a:focus-visible {
+        outline: 1px solid var(--color-text);
+    }
+
+    .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .project-tags span {
+        padding: 0.5rem;
+        background-color: var(--color-surface);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    @media (min-width: 768px) {
+        .project-layout {
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .project-gallery {
+            width: 65%;
+        }
+
+        .project-details {
+            min-width: 0;
+            position: sticky;
+            top: 0;
+            order: 2;
+        }
+    }
+</style>

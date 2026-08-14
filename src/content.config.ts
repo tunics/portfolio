@@ -22,15 +22,6 @@ const projects = defineCollection({
                     }),
                 )
                 .default([]),
-            videos: z
-                .array(
-                    z.object({
-                        src: z.string(),
-                        type: z.enum(['video/mp4', 'video/webm', 'video/ogg']),
-                        title: z.string().optional(),
-                    }),
-                )
-                .default([]),
             links: z
                 .array(
                     z.object({

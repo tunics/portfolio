@@ -7,17 +7,13 @@ import instagram from '../assets/logos/instagram.svg?url';
 import fiveHundredPx from '../assets/logos/500px.svg?url';
 
 interface Props {
-    inMenu?: boolean;
+    variant?: 'default' | 'menu';
 }
 
-const { inMenu = false } = Astro.props;
+const { variant = 'default' } = Astro.props;
 
 const socialLinks = [
-    {
-        href: 'https://wa.me/5561982282199',
-        label: 'WhatsApp',
-        icon: whatsapp,
-    },
+    { href: 'https://wa.me/5561982282199', label: 'WhatsApp', icon: whatsapp },
     {
         href: 'https://www.linkedin.com/in/antonio-caixeta',
         label: 'LinkedIn',
@@ -34,13 +30,12 @@ const socialLinks = [
 ];
 ---
 
-<div class:list={['social-icons-container', { 'menu-social-links': inMenu }]}> 
-    {inMenu && <hr />}
+<div class:list={['social-links', `social-links--${variant}`]}>
+    {variant === 'menu' && <hr />}
     {
         socialLinks.map(({ href, label, icon }) => (
             <a
                 href={href}
-                class="icon"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
@@ -50,3 +45,43 @@ const socialLinks = [
         ))
     }
 </div>
+
+<style>
+    .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .social-links--menu {
+        padding: 1rem 3rem;
+        gap: 0.5rem;
+    }
+
+    hr {
+        width: 100%;
+    }
+
+    a {
+        height: 2rem;
+        padding: 0.25rem;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:focus-visible {
+        background-color: var(--color-surface);
+    }
+
+    a:focus-visible {
+        outline: 1px solid var(--color-text);
+    }
+
+    img {
+        height: 100%;
+    }
+</style>

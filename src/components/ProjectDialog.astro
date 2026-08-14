@@ -7,13 +7,118 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { slug } = project.data;
+const { slug, title } = project.data;
+const dialogId = `project-dialog-${slug}`;
+const headingId = `project-title-${slug}`;
 ---
 
 <dialog
-    id={`project-dialog-${slug}`}
-    class="project-modal"
-    aria-labelledby={`project-title-${slug}`}
+    id={dialogId}
+    class="project-dialog"
+    data-project-dialog
+    aria-labelledby={headingId}
 >
-    <ProjectContent project={project} modal />
+    <ProjectContent project={project} headingId={headingId}>
+        <form slot="actions" method="dialog" class="close-form">
+            <button type="submit" value="close" data-dialog-close aria-label={`Fechar projeto ${title}`}>
+                <span class="material-symbols-outlined" aria-hidden="true">
+                    close
+                </span>
+            </button>
+        </form>
+    </ProjectContent>
 </dialog>
+
+<script>
+    document
+        .querySelectorAll<HTMLButtonElement>('[data-project-dialog-target]')
+        .forEach((button) => {
+            button.addEventListener('click', () => {
+                const dialogId = button.dataset.projectDialogTarget;
+                const dialog = dialogId ? document.getElementById(dialogId) : null;
+
+                if (dialog instanceof HTMLDialogElement) {
+                    dialog.showModal();
+                }
+            });
+        });
+
+    document
+        .querySelectorAll<HTMLDialogElement>('[data-project-dialog]')
+        .forEach((dialog) => {
+            dialog.addEventListener('click', (event) => {
+                if (event.target === dialog) dialog.close();
+            });
+        });
+</script>
+
+<style>
+    .project-dialog {
+        width: calc(100% - 3rem);
+        max-width: 1400px;
+        max-height: calc(100dvh - 3rem);
+        padding: 0;
+        border: 0;
+        overscroll-behavior-block: contain;
+    }
+
+    .project-dialog::backdrop {
+        background-color: rgb(0 0 0 / 25%);
+        backdrop-filter: blur(5px) grayscale(100%);
+    }
+
+    .close-form {
+        position: fixed;
+        top: 1.2rem;
+        right: 2.5rem;
+        align-self: flex-end;
+    }
+
+    button {
+        padding: 0.4rem;
+        border: 0;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    button:hover,
+    button:focus-visible {
+        background-color: var(--color-surface);
+    }
+
+    button:focus-visible {
+        outline: 1px solid var(--color-text);
+        outline-offset: -1px;
+    }
+
+    @media (min-width: 768px) {
+        .close-form {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    .project-dialog::-webkit-scrollbar {
+        width: 1rem;
+    }
+
+    .project-dialog::-webkit-scrollbar-track {
+        border: solid 5px white;
+        box-shadow: inset 0 0 10px 10px white;
+    }
+
+    .project-dialog::-webkit-scrollbar-thumb {
+        width: 0.5rem;
+        border: solid 5px white;
+        border-radius: 10px;
+        background: var(--color-border);
+        box-shadow: inset 0 0 10px 10px var(--color-border);
+    }
+
+    .project-dialog::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-text);
+    }
+</style>

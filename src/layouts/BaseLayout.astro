@@ -1,7 +1,5 @@
 ---
 import '../styles/global.css';
-import '../styles/migration.css';
-import SiteScripts from '../components/SiteScripts.astro';
 
 interface Props {
     title?: string;
@@ -22,9 +20,14 @@ const {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content={description} />
         <meta name="theme-color" content="#fdfdfd" />
+        <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
         <link
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
             rel="stylesheet"
@@ -32,6 +35,5 @@ const {
     </head>
     <body>
         <slot />
-        <SiteScripts />
     </body>
 </html>

@@ -5,7 +5,7 @@ import SocialLinks from './SocialLinks.astro';
 const homeUrl = import.meta.env.BASE_URL;
 ---
 
-<header id="top">
+<header id="top" class="site-header">
     <h1>Antonio <br />Cruvinel <br />Caixeta</h1>
 
     <div class="subtitle">
@@ -13,16 +13,22 @@ const homeUrl = import.meta.env.BASE_URL;
         <img alt="" aria-hidden="true" class="marker" src={marker} />
     </div>
 
-    <nav class="close" aria-label="Navegação principal">
+    <nav
+        class="site-nav"
+        data-site-nav
+        data-open="false"
+        aria-label="Navegação principal"
+    >
         <div class="nav-top">
-            <div class="nav-top-txt" aria-hidden="true"></div>
+            <span class="menu-label" data-menu-label aria-hidden="true"></span>
 
-            <a id="btn-home" class="navigation-btn" href={homeUrl}>
+            <a class="nav-link home-link" data-home-link href={homeUrl}>
                 Antonio Cruvinel Caixeta
             </a>
 
             <button
-                class="btn-abrir-fechar"
+                class="menu-toggle"
+                data-menu-toggle
                 type="button"
                 aria-expanded="false"
                 aria-label="Abrir menu"
@@ -33,10 +39,215 @@ const homeUrl = import.meta.env.BASE_URL;
             </button>
         </div>
 
-        <a class="navigation-btn" href={`${homeUrl}#portfolio`}>Portfólio</a>
-        <a class="navigation-btn" href={`${homeUrl}#about`}>Sobre</a>
-        <a class="navigation-btn" href={`${homeUrl}#contact`}>Contatos</a>
+        <a class="nav-link" href={`${homeUrl}#portfolio`}>Portfólio</a>
+        <a class="nav-link" href={`${homeUrl}#about`}>Sobre</a>
+        <a class="nav-link" href={`${homeUrl}#contact`}>Contatos</a>
 
-        <SocialLinks inMenu />
+        <SocialLinks variant="menu" />
     </nav>
 </header>
+
+<script>
+    const nav = document.querySelector<HTMLElement>('[data-site-nav]');
+    const menuButton = nav?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const menuIcon = menuButton?.querySelector('.material-symbols-outlined');
+    const menuLabel = nav?.querySelector<HTMLElement>('[data-menu-label]');
+    const homeLink = nav?.querySelector<HTMLElement>('[data-home-link]');
+
+    function setMenu(open: boolean) {
+        if (!nav || !menuButton) return;
+
+        nav.dataset.open = String(open);
+        menuButton.setAttribute('aria-expanded', String(open));
+        menuButton.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+
+        if (menuIcon) menuIcon.textContent = open ? 'close' : 'menu';
+        if (menuLabel) menuLabel.textContent = open ? 'Menu' : '';
+    }
+
+    function updateHomeLink() {
+        homeLink?.classList.toggle('is-visible', window.scrollY > 180);
+    }
+
+    menuButton?.addEventListener('click', () => {
+        setMenu(nav?.dataset.open !== 'true');
+    });
+
+    nav?.querySelectorAll<HTMLAnchorElement>('a.nav-link').forEach((link) => {
+        link.addEventListener('click', () => setMenu(false));
+    });
+
+    window.addEventListener('scroll', updateHomeLink, { passive: true });
+    updateHomeLink();
+</script>
+
+<style>
+    .site-header {
+        width: 100%;
+        position: relative;
+        align-self: flex-start;
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        padding: 5rem 1.5rem 1.5rem;
+        font-size: 2.8rem;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    .subtitle {
+        padding: 1.5rem;
+        background-color: var(--color-surface);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-weight: 600;
+    }
+
+    .marker {
+        width: 1.5rem;
+    }
+
+    .site-nav {
+        width: 100%;
+        padding: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        background: var(--page-background);
+        box-shadow: 0 2px 5px rgb(0 0 0 / 5%);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .site-nav[data-open='true'] {
+        box-shadow: 0 5px 20px rgb(0 0 0 / 30%);
+    }
+
+    .nav-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .menu-label {
+        display: none;
+        padding-left: 3rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .menu-toggle {
+        padding: 1rem;
+        border: 0;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu-toggle:hover,
+    .menu-toggle:focus-visible,
+    .nav-link:hover,
+    .nav-link:focus-visible {
+        background-color: var(--color-surface);
+    }
+
+    .menu-toggle:focus-visible,
+    .nav-link:focus-visible {
+        outline: 1px solid var(--color-text);
+        outline-offset: -1px;
+    }
+
+    .nav-link {
+        display: none;
+        padding: 0.5rem 3rem;
+        border: 0;
+        color: var(--color-text);
+        background: transparent;
+        font-weight: 700;
+        text-align: left;
+        text-decoration: none;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+        text-decoration: underline;
+    }
+
+    .home-link {
+        display: block;
+        padding: 1rem 0.5rem;
+        margin-left: 1.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .home-link.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .site-nav[data-open='true'] .menu-label,
+    .site-nav[data-open='true'] .nav-link {
+        display: block;
+    }
+
+    .site-nav[data-open='true'] .home-link {
+        display: none;
+    }
+
+    .site-nav[data-open='true'] :global(.social-links--menu) {
+        display: flex;
+    }
+
+    .site-nav[data-open='false'] :global(.social-links--menu) {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        .site-header {
+            width: 380px;
+            position: sticky;
+            top: 0;
+        }
+
+        h1 {
+            padding: 3rem 3rem 1.5rem;
+            font-size: 2.3rem;
+        }
+
+        .subtitle {
+            padding: 1.5rem 3rem;
+        }
+
+        .site-nav,
+        .site-nav[data-open='true'] {
+            padding: 2rem 0;
+            position: relative;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .nav-top,
+        .site-nav :global(.social-links--menu) {
+            display: none;
+        }
+
+        .nav-link,
+        .site-nav[data-open='true'] .nav-link {
+            display: block;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        h1 {
+            font-size: 3rem;
+        }
+    }
+</style>
