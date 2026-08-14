@@ -1,0 +1,42 @@
+---
+import marker from '../assets/marker.svg?url';
+import SocialLinks from './SocialLinks.astro';
+
+const homeUrl = import.meta.env.BASE_URL;
+---
+
+<header id="top">
+    <h1>Antonio <br />Cruvinel <br />Caixeta</h1>
+
+    <div class="subtitle">
+        Designer gráfico e web, especializado em UX e UI
+        <img alt="" aria-hidden="true" class="marker" src={marker} />
+    </div>
+
+    <nav class="close" aria-label="Navegação principal">
+        <div class="nav-top">
+            <div class="nav-top-txt" aria-hidden="true"></div>
+
+            <a id="btn-home" class="navigation-btn" href={homeUrl}>
+                Antonio Cruvinel Caixeta
+            </a>
+
+            <button
+                class="btn-abrir-fechar"
+                type="button"
+                aria-expanded="false"
+                aria-label="Abrir menu"
+            >
+                <span class="material-symbols-outlined" aria-hidden="true">
+                    menu
+                </span>
+            </button>
+        </div>
+
+        <a class="navigation-btn" href={`${homeUrl}#portfolio`}>Portfólio</a>
+        <a class="navigation-btn" href={`${homeUrl}#about`}>Sobre</a>
+        <a class="navigation-btn" href={`${homeUrl}#contact`}>Contatos</a>
+
+        <SocialLinks inMenu />
+    </nav>
+</header>

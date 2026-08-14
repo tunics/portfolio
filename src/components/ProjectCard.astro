@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { slug, title, summary, cover, coverAlt } = project.data;
+const projectUrl = `${import.meta.env.BASE_URL}projetos/${slug}/`;
+---
+
+<a
+    class="project"
+    href={projectUrl}
+    data-project-open={`project-dialog-${slug}`}
+    aria-haspopup="dialog"
+>
+    <Image
+        src={cover}
+        alt={coverAlt}
+        class="project-main-img"
+        widths={[480, 720, 960]}
+        sizes="(min-width: 1200px) 33vw, (min-width: 900px) 50vw, 100vw"
+    />
+
+    <div class="project-subtitle-info">
+        <h3 class="project-name">{title}</h3>
+        <p class="project-short-description">{summary}</p>
+    </div>
+</a>

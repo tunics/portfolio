@@ -1,0 +1,21 @@
+html { min-height: 100%; scroll-behavior: smooth; }
+body { min-height: 100vh; }
+.container { max-width: var(--max-width); }
+header nav.close #btn-home.is-visible { opacity: 1; }
+main section { scroll-margin-top: 4.5rem; }
+.project { color: inherit; display: block; text-decoration: none; }
+.project-main-img { aspect-ratio: 4 / 3; object-fit: cover; }
+@media (hover: none) { .project-subtitle-info { transform: translateY(0); } }
+.project-info .project-name { font-size: 1.25rem; font-weight: 700; }
+.project-summary { font-weight: 600; }
+.project-description > :not(:last-child) { margin-bottom: 1rem; }
+#contact .links-container { margin-top: 1.5rem; }
+#contact .links-container .contato { display: flex; align-items: center; gap: 0.25rem; color: inherit; padding: 0.25rem; margin: 0; }
+.project-page { min-width: 0; }
+.project-page article { width: 100%; }
+.project-page .project-modal-container { background: rgba(255, 255, 255, 0.45); }
+.back-link { color: inherit; width: fit-content; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}

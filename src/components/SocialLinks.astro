@@ -1,0 +1,52 @@
+---
+import whatsapp from '../assets/logos/whatsapp.svg?url';
+import linkedin from '../assets/logos/linkedin.svg?url';
+import behance from '../assets/logos/behance.svg?url';
+import github from '../assets/logos/github.svg?url';
+import instagram from '../assets/logos/instagram.svg?url';
+import fiveHundredPx from '../assets/logos/500px.svg?url';
+
+interface Props {
+    inMenu?: boolean;
+}
+
+const { inMenu = false } = Astro.props;
+
+const socialLinks = [
+    {
+        href: 'https://wa.me/5561982282199',
+        label: 'WhatsApp',
+        icon: whatsapp,
+    },
+    {
+        href: 'https://www.linkedin.com/in/antonio-caixeta',
+        label: 'LinkedIn',
+        icon: linkedin,
+    },
+    { href: 'https://behance.net/tunics', label: 'Behance', icon: behance },
+    { href: 'https://github.com/tunics', label: 'GitHub', icon: github },
+    {
+        href: 'https://www.instagram.com/tunics/',
+        label: 'Instagram',
+        icon: instagram,
+    },
+    { href: 'https://500px.com/tunics', label: '500px', icon: fiveHundredPx },
+];
+---
+
+<div class:list={['social-icons-container', { 'menu-social-links': inMenu }]}> 
+    {inMenu && <hr />}
+    {
+        socialLinks.map(({ href, label, icon }) => (
+            <a
+                href={href}
+                class="icon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+            >
+                <img src={icon} alt="" />
+            </a>
+        ))
+    }
+</div>

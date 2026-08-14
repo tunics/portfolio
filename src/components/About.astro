@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import profileImage from '../assets/img-antonio-perfil.png';
+
+const skillGroups = [
+    {
+        title: 'Design',
+        skills: [
+            'Logos',
+            'Identidade Visual',
+            'Projetos gráficos impressos',
+            'Design System',
+            'Protótipos',
+            'Websites',
+            'Motion Design',
+            'Animação 2D',
+        ],
+    },
+    {
+        title: 'Ferramentas',
+        skills: [
+            'Adobe Creative Suite',
+            'Figma',
+            'Affinity',
+            'Cinema 4D',
+            'Corel Draw',
+        ],
+    },
+    {
+        title: 'Programação',
+        skills: ['HTML', 'CSS', 'JavaScript', 'Python'],
+    },
+];
+---
+
+<section id="about">
+    <h2>Sobre</h2>
+
+    <div class="profile-container">
+        <div class="img-profile">
+            <Image
+                src={profileImage}
+                alt="Foto de perfil de Antonio Cruvinel Caixeta"
+                widths={[128, 256]}
+                sizes="128px"
+            />
+        </div>
+
+        <p class="txt-profile">
+            Olá! Meu nome é Antonio Cruvinel Caixeta e sou designer gráfico e
+            web formado pela UFG (Universidade Federal de Goiás). Buscando
+            sempre me aperfeiçoar, estou me especializando em UI e UX e também
+            entrando na área de front-end, fazendo a ponte entre o design e a
+            programação. Entusiasta de motion design, também trabalho com
+            animação e edição de vídeo, além de ter a fotografia como hobby.
+            Atualmente trabalho em tempo integral nos Correios, mas estou
+            aberto a pequenos projetos.
+        </p>
+    </div>
+
+    <h3>Habilidades</h3>
+
+    {
+        skillGroups.map(({ title, skills }) => (
+            <div class="skills">
+                <h3>{title}</h3>
+                {skills.map((skill) => <span class="chips">{skill}</span>)}
+            </div>
+        ))
+    }
+</section>

@@ -1,0 +1,67 @@
+<script>
+    const nav = document.querySelector('nav');
+    const menuButton = document.querySelector('.btn-abrir-fechar');
+    const menuIcon = menuButton?.querySelector('.material-symbols-outlined');
+    const menuLabel = document.querySelector('.nav-top-txt');
+    const homeLink = document.getElementById('btn-home');
+
+    function setMenu(open: boolean) {
+        if (!(nav instanceof HTMLElement) || !(menuButton instanceof HTMLButtonElement)) {
+            return;
+        }
+
+        nav.classList.toggle('open', open);
+        nav.classList.toggle('close', !open);
+        menuButton.setAttribute('aria-expanded', String(open));
+        menuButton.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+
+        if (menuIcon) menuIcon.textContent = open ? 'close' : 'menu';
+        if (menuLabel) menuLabel.textContent = open ? 'Menu' : '';
+    }
+
+    menuButton?.addEventListener('click', () => {
+        setMenu(!nav?.classList.contains('open'));
+    });
+
+    nav?.querySelectorAll<HTMLAnchorElement>('a.navigation-btn').forEach((link) => {
+        link.addEventListener('click', () => setMenu(false));
+    });
+
+    window.addEventListener(
+        'scroll',
+        () => homeLink?.classList.toggle('is-visible', window.scrollY > 180),
+        { passive: true },
+    );
+
+    document.querySelectorAll<HTMLAnchorElement>('[data-project-open]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+            if (
+                event.button !== 0 ||
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey
+            ) {
+                return;
+            }
+
+            const dialogId = link.dataset.projectOpen;
+            const dialog = dialogId ? document.getElementById(dialogId) : null;
+
+            if (dialog instanceof HTMLDialogElement) {
+                event.preventDefault();
+                dialog.showModal();
+            }
+        });
+    });
+
+    document.querySelectorAll<HTMLDialogElement>('dialog.project-modal').forEach((dialog) => {
+        dialog.querySelector('[data-project-close]')?.addEventListener('click', () => {
+            dialog.close();
+        });
+
+        dialog.addEventListener('click', (event) => {
+            if (event.target === dialog) dialog.close();
+        });
+    });
+</script>

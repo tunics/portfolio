@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Header from '../components/Header.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectDialog from '../components/ProjectDialog.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects', ({ data }) => data.published))
+    .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout>
+    <div class="container">
+        <Header />
+
+        <main>
+            <section id="portfolio">
+                <h2>Portfólio</h2>
+                {projects.map((project) => <ProjectCard project={project} />)}
+            </section>
+
+            <hr />
+            <About />
+            <hr />
+            <Contact />
+        </main>
+    </div>
+
+    {projects.map((project) => <ProjectDialog project={project} />)}
+</BaseLayout>

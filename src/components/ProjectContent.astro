@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import { render, type CollectionEntry } from 'astro:content';
+import { resolveProjectVideo } from '../utils/project-media';
+
+interface Props {
+    project: CollectionEntry<'projects'>;
+    modal?: boolean;
+}
+
+const { project, modal = false } = Astro.props;
+const { slug, title, summary, images, videos, links, tags } = project.data;
+const { Content } = await render(project);
+---
+
+<div class="project-modal-container">
+    <div class="project-media-container">
+        {
+            videos.map((video) => (
+                <video
+                    class="project-video"
+                    controls
+                    loop
+                    preload="metadata"
+                    aria-label={video.title ?? `Vídeo do projeto ${title}`}
+                >
+                    <source
+                        src={resolveProjectVideo(project.filePath, video.src)}
+                        type={video.type}
+                    />
+                </video>
+            ))
+        }
+
+        {
+            images.map((image) => (
+                <Image
+                    src={image.src}
+                    alt={image.alt}
+                    class="project-img"
+                    widths={[640, 960, 1280, 1600]}
+                    sizes="(min-width: 768px) 65vw, 100vw"
+                />
+            ))
+        }
+    </div>
+
+    <div class="project-info">
+        <h2
+            id={modal ? `project-title-${slug}` : undefined}
+            class="project-name"
+        >
+            {title}
+        </h2>
+        {
+            modal && (
+                <button
+                    class="btn-close-modal"
+                    type="button"
+                    data-project-close
+                    aria-label={`Fechar projeto ${title}`}
+                >
+                    <span class="material-symbols-outlined" aria-hidden="true">
+                        close
+                    </span>
+                </button>
+            )
+        }
+        <p class="project-summary">{summary}</p>
+        <div class="project-description"><Content /></div>
+
+        {
+            links.length > 0 && (
+                <ul class="project-links">
+                    {links.map((link) => (
+                        <li>
+                            <a
+                                href={link.url}
+                                class="link"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {link.label}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )
+        }
+
+        <div class="project-tags" aria-label="Tecnologias e categorias">
+            {tags.map((tag) => <span class="chips">{tag}</span>)}
+        </div>
+    </div>
+</div>

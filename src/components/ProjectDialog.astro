@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectContent from './ProjectContent.astro';
+
+interface Props {
+    project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { slug } = project.data;
+---
+
+<dialog
+    id={`project-dialog-${slug}`}
+    class="project-modal"
+    aria-labelledby={`project-title-${slug}`}
+>
+    <ProjectContent project={project} modal />
+</dialog>
