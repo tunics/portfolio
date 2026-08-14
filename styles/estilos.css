@@ -1,5 +1,5 @@
 @import url(initial.css);
-@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:ital@1&family=Nunito&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital@1&family=Nunito&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap');
 
 :root {
     --bg-gradient: linear-gradient(47deg, #fdfdfd 48%, #ededed 78%);
@@ -13,7 +13,7 @@ html {
 }
 
 body {
-    font-family: "Shippori Mincho", serif;
+    font-family: 'Shippori Mincho', serif;
     background: var(--bg-gradient);
     display: flex;
     justify-content: center;
@@ -51,7 +51,7 @@ header {
 h1 {
     text-transform: uppercase;
     line-height: 1em;
-    padding: 4rem 1.5rem 1.5rem 1.5rem;
+    padding: 5rem 1.5rem 1.5rem 1.5rem;
     font-size: 2.8rem;
 }
 
@@ -80,7 +80,6 @@ header nav {
 header nav.open {
     background: var(--bg-gradient);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    padding: 0 0 2rem 0;
 }
 
 header nav.close {
@@ -116,7 +115,7 @@ header nav .btn-abrir-fechar {
     align-self: flex-end;
     background-color: transparent;
     border: none;
-    padding: 0.5rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,12 +140,39 @@ header nav .navigation-btn {
     display: none;
 }
 
-header nav.open .navigation-btn {
+header .menu-glass {
+    flex: 1;
+    display: flex;
+    width: 100%;
+    background-color: var(--bg-transparent-black);
+}
+
+header nav.open .navigation-btn,
+header nav.open .nav-top-txt {
     display: block;
 }
 
-header nav.close .navigation-btn {
+header nav.close .navigation-btn,
+header nav.close .nav-top-txt {
     display: none;
+}
+
+header nav.open #btn-home {
+    display: none;
+}
+
+header nav.close #btn-home {
+    display: block;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    margin-left: 1.5rem;
+    /* opacity: 0; */
+}
+
+.navigation-btn {
+    background-color: transparent;
+    color: var(--font-color);
+    border: none;
+    text-align: left;
 }
 
 .navigation-btn:hover {
@@ -170,11 +196,6 @@ header nav.close .navigation-btn {
     color: var(--font-color);
 }
 
-header nav #close-glass {
-    background-color: red;
-    height: fit-content;
-}
-
 @media screen and (min-width: 768px) {
     header {
         position: sticky;
@@ -184,7 +205,7 @@ header nav #close-glass {
 
     h1 {
         padding: 3rem 3rem 1.5rem 3rem;
-        font-size: 3rem;
+        font-size: 2.3rem;
     }
 
     .subtitle {
@@ -215,6 +236,12 @@ header nav #close-glass {
     header nav.open .navigation-btn,
     header nav.close .navigation-btn {
         display: block;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    h1 {
+        font-size: 3rem;
     }
 }
 
@@ -250,6 +277,13 @@ main section#portfolio {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+}
+
+a.anchor {
+    display: block;
+    visibility: hidden;
+    position: relative;
+    top: -6rem;
 }
 
 .work {
@@ -291,13 +325,9 @@ section#about .profile-container {
 section#about .img-profile {
     width: 8rem;
     height: 8rem;
-    background-color: red;
     border-radius: 50%;
     overflow: hidden;
     flex: 0 0 auto;
-}
-
-@media screen and (min-width: 1024px) {
 }
 
 section#about .img-profile img {
@@ -340,4 +370,78 @@ section#about .txt-profile {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 0.75rem;
+}
+
+#contact .links-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#contact .links-container a,
+.social-icons-container a {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.25rem;
+}
+
+#contact .links-container a:hover,
+.social-icons-container a:hover {
+    background-color: var(--bg-transparent-black);
+}
+
+#contact .links-container a:focus,
+.social-icons-container a:focus {
+    outline: 1px solid var(--font-color);
+}
+
+.social-icons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.social-icons-container hr {
+    display: none;
+}
+
+header .social-icons-container {
+    padding: 1rem 3rem;
+    gap: 0.5rem;
+}
+
+header nav.open .social-icons-container {
+    display: flex;
+}
+
+header nav.close .social-icons-container {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    header nav.open .social-icons-container {
+        display: none;
+    }
+}
+
+header nav .social-icons-container hr {
+    display: block;
+    width: 100%;
+}
+
+.social-icons-container .icon {
+    height: 2rem;
+}
+
+.social-icons-container .icon img {
+    height: 100%;
+}
+
+#contact .divisor {
+    border-left: 1px solid var(--line-color);
 }
