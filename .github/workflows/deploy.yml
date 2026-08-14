@@ -59,4 +59,23 @@ jobs:
                   port: 21
                   local-dir: ./dist/
                   server-dir: ./public_html/
-                  log-level: minimal
+                  log-level: standard
+
+            - name: Verify files on Hostinger
+              env:
+                  FTP_SERVER: ${{ secrets.FTP_SERVER }}
+                  FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+                  FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+              run: |
+                  remote_files="$(curl --silent --show-error --fail \
+                    --user "${FTP_USERNAME}:${FTP_PASSWORD}" \
+                    --list-only \
+                    "ftp://${FTP_SERVER}:21/public_html/" | tr -d '\r')"
+
+                  echo "Files found in public_html:"
+                  printf '%s\n' "$remote_files"
+
+                  if ! grep -Eq '(^|/)index\.html$' <<< "$remote_files"; then
+                    echo "::error::Upload finished, but public_html/index.html was not found on the FTP server."
+                    exit 1
+                  fi
